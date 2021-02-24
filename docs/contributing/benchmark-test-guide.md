@@ -102,13 +102,12 @@ Reference: https://qiita.com/marnie_ms4/items/8706f43591fb23dd4e64
 
 To design testing data, we need to think about the following things:
 
-- How the parameter affects the benchmark result
-- If number of execution will affect the benchmark result
+- How the parameter affects the benchmark result (data volume, etc)
 - How the cache affects the result
 - What is the realistic use case
 - We need to test the heavy loading cases
 
-For example, to think about testing the [json decode performance](https://github.com/vdaas/vald/blob/master/internal/encoding/json/json.go#L29), we should test the following data:
+For example, base on the above criterias, to think about testing the [json decode performance](https://github.com/vdaas/vald/blob/master/internal/encoding/json/json.go#L29), we should test the following data:
 
 - io.Reader with empty data and data is a struct with 1 field
 - io.Reader with 10 data and data is a struct with 1 field
@@ -117,6 +116,16 @@ For example, to think about testing the [json decode performance](https://github
 - io.Reader with 10 data and data is a struct with 10 field
 - io.Reader with 100 data and data is a struct with 10 field
 - io.Reader with 100 data and data is a struct with 50 field
+
+These testing data are focus on measuring the performance of how the size of the data affect the performance of the function.
+
+One more example, to test the [queue performance](https://github.com/vdaas/vald/blob/master/internal/worker/queue.go#L116), we should test the folowing data:
+
+- push 1 item to queue
+- push 10 items to queue
+- push 100 items to queue
+
+Since there are cache to store the queue elements, we should test the number of execution to ensure the performance of queue.
 
 ### Testing result
 
