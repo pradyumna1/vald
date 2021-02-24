@@ -10,7 +10,6 @@ import (
 	"github.com/vdaas/vald/internal/errgroup"
 )
 
-/*
 func Benchmark_Push(b *testing.B) {
 	type fields struct {
 		buffer  int
@@ -153,7 +152,8 @@ func Benchmark_Push(b *testing.B) {
 	}
 	b.ResetTimer()
 }
-*/
+
+/*
 func Benchmark_Parallel_Push(b *testing.B) {
 	type fields struct {
 		buffer  int
@@ -254,3 +254,4 @@ func Benchmark_Parallel_Push(b *testing.B) {
 		}
 	}
 }
+*/
