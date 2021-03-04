@@ -223,6 +223,10 @@
       "properties": {
         "skipStrictExistCheck": {
           "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },

@@ -454,6 +454,10 @@
         },
         "filters": {
           "$ref": "#/definitions/v1FilterConfig"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
@@ -574,6 +578,10 @@
         },
         "filters": {
           "$ref": "#/definitions/v1FilterConfig"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
@@ -610,6 +618,10 @@
         },
         "filters": {
           "$ref": "#/definitions/v1FilterConfig"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
