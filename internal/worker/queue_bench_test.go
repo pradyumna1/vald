@@ -271,6 +271,10 @@ func Benchmark_Pop(b *testing.B) {
 		b.Fatal(err)
 	}
 
+	job := func(context.Context) error {
+		return nil
+	}
+
 	go func() {
 		for {
 			select {
@@ -280,19 +284,17 @@ func Benchmark_Pop(b *testing.B) {
 				if err != nil {
 					b.Error(err)
 				}
+			default:
+				err := q.Push(ctx, job)
+				if err == context.Canceled || (err != nil && errors.Is(err, errors.ErrQueueIsNotRunning())) {
+					return
+				}
+				if err != nil {
+					b.Error(err)
+				}
 			}
 		}
 	}()
-
-	job := func(context.Context) error {
-		return nil
-	}
-
-	for i := 0; i < 1000000; i++ {
-		if err := q.Push(ctx, job); err != nil {
-			b.Error(err)
-		}
-	}
 
 	b.ReportAllocs()
 	b.ResetTimer()
