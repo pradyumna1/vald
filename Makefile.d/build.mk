@@ -29,6 +29,7 @@ binary/build: \
 	cmd/meta/cassandra/meta \
 	cmd/manager/backup/mysql/backup \
 	cmd/manager/backup/cassandra/backup \
+	cmd/manager/backup/firestore/backup \
 	cmd/manager/compressor/compressor \
 	cmd/manager/index/index
 
@@ -364,6 +365,34 @@ cmd/manager/backup/cassandra/backup: \
 		-o $@ \
 		$(dir $@)main.go
 
+
+cmd/manager/backup/firestore/backup: \
+	$(GO_SOURCES_INTERNAL) \
+	$(PBGOS) \
+	$(shell find ./cmd/manager/backup/firestore -type f -name '*.go' -not -name '*_test.go' -not -name 'doc.go') \
+	$(shell find ./pkg/manager/backup/firestore -type f -name '*.go' -not -name '*_test.go' -not -name 'doc.go')
+	CGO_ENABLED=0 \
+	GO111MODULE=on \
+	GOPRIVATE=$(GOPRIVATE) \
+	go build \
+		--ldflags "-s -w -extldflags=-static \
+		-X '$(GOPKG)/internal/info.Version=$(VERSION)' \
+		-X '$(GOPKG)/internal/info.GitCommit=$(GIT_COMMIT)' \
+		-X '$(GOPKG)/internal/info.BuildTime=$(DATETIME)' \
+		-X '$(GOPKG)/internal/info.GoVersion=$(GO_VERSION)' \
+		-X '$(GOPKG)/internal/info.GoOS=$(GOOS)' \
+		-X '$(GOPKG)/internal/info.GoArch=$(GOARCH)' \
+		-X '$(GOPKG)/internal/info.CGOEnabled=$${CGO_ENABLED}' \
+		-X '$(GOPKG)/internal/info.BuildCPUInfoFlags=$(CPU_INFO_FLAGS)' \
+		-buildid=" \
+		-mod=readonly \
+		-modcacherw \
+		-a \
+		-tags "osusergo netgo static_build" \
+		-trimpath \
+		-o $@ \
+		$(dir $@)main.go
+
 cmd/manager/compressor/compressor: \
 	$(GO_SOURCES_INTERNAL) \
 	$(PBGOS) \
@@ -486,6 +515,7 @@ binary/build/zip: \
 	artifacts/vald-meta-cassandra-$(GOOS)-$(GOARCH).zip \
 	artifacts/vald-manager-backup-mysql-$(GOOS)-$(GOARCH).zip \
 	artifacts/vald-manager-backup-cassandra-$(GOOS)-$(GOARCH).zip \
+	artifacts/vald-manager-backup-firestore-$(GOOS)-$(GOARCH).zip \
 	artifacts/vald-manager-compressor-$(GOOS)-$(GOARCH).zip \
 	artifacts/vald-manager-index-$(GOOS)-$(GOARCH).zip
 
@@ -534,6 +564,10 @@ artifacts/vald-manager-backup-mysql-$(GOOS)-$(GOARCH).zip: cmd/manager/backup/my
 	zip --junk-paths $@ $<
 
 artifacts/vald-manager-backup-cassandra-$(GOOS)-$(GOARCH).zip: cmd/manager/backup/cassandra/backup
+	$(call mkdir, $(dir $@))
+	zip --junk-paths $@ $<
+
+artifacts/vald-manager-backup-firestore-$(GOOS)-$(GOARCH).zip: cmd/manager/backup/firestore/backup
 	$(call mkdir, $(dir $@))
 	zip --junk-paths $@ $<
 

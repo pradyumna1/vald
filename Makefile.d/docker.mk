@@ -28,6 +28,7 @@ docker/build: \
 	docker/build/meta-cassandra \
 	docker/build/backup-manager-mysql \
 	docker/build/backup-manager-cassandra \
+	docker/build/backup-manager-firestore \
 	docker/build/manager-compressor \
 	docker/build/manager-index \
 	docker/build/helm-operator
@@ -239,6 +240,23 @@ docker/build/backup-manager-cassandra:
 	    $(DOCKER_OPTS) \
 	    -f dockers/manager/backup/cassandra/Dockerfile \
 	    -t $(ORG)/$(MANAGER_BACKUP_CASSANDRA_IMAGE):$(TAG) . \
+	    --build-arg GO_VERSION=$(GO_VERSION) \
+	    --build-arg DISTROLESS_IMAGE=$(DISTROLESS_IMAGE) \
+	    --build-arg DISTROLESS_IMAGE_TAG=$(DISTROLESS_IMAGE_TAG) \
+	    --build-arg MAINTAINER=$(MAINTAINER) \
+	    --build-arg UPX_OPTIONS=$(UPX_OPTIONS)
+
+.PHONY: docker/name/backup-manager-firestore
+docker/name/backup-manager-firestore:
+	@echo "$(ORG)/$(MANAGER_BACKUP_FIRESTORE_IMAGE)"
+
+.PHONY: docker/build/backup-manager-firestore
+## build backup-manager-firestore image
+docker/build/backup-manager-firestore:
+	$(DOCKER) build \
+	    $(DOCKER_OPTS) \
+	    -f dockers/manager/backup/firestore/Dockerfile \
+	    -t $(ORG)/$(MANAGER_BACKUP_FIRESTORE_IMAGE):$(TAG) . \
 	    --build-arg GO_VERSION=$(GO_VERSION) \
 	    --build-arg DISTROLESS_IMAGE=$(DISTROLESS_IMAGE) \
 	    --build-arg DISTROLESS_IMAGE_TAG=$(DISTROLESS_IMAGE_TAG) \

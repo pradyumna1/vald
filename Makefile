@@ -32,6 +32,7 @@ HELM_OPERATOR_IMAGE             = $(NAME)-helm-operator
 LB_GATEWAY_IMAGE                = $(NAME)-lb-gateway
 LOADTEST_IMAGE                  = $(NAME)-loadtest
 MANAGER_BACKUP_CASSANDRA_IMAGE  = $(NAME)-manager-backup-cassandra
+MANAGER_BACKUP_FIRESTORE_IMAGE  = $(NAME)-manager-backup-firestore
 MANAGER_BACKUP_MYSQL_IMAGE      = $(NAME)-manager-backup-mysql
 MANAGER_COMPRESSOR_IMAGE        = $(NAME)-manager-compressor
 MANAGER_INDEX_IMAGE             = $(NAME)-manager-index
