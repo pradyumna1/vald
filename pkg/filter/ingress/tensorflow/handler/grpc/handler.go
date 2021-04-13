@@ -46,7 +46,7 @@ func New(opts ...Option) Server {
 }
 
 func (s *server) GenVector(ctx context.Context, req *payload.Object_Blob) (vec *payload.Object_Vector, err error) {
-	ctx, span := trace.StartSpan(ctx, "vald/.GetVector")
+	_, span := trace.StartSpan(ctx, "vald/.GetVector")
 	defer func() {
 		if span != nil {
 			span.End()

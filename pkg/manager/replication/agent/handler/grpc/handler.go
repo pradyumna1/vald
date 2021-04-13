@@ -45,7 +45,7 @@ func New(opts ...Option) Server {
 }
 
 func (s *server) Recover(ctx context.Context, req *payload.Replication_Recovery) (_ *payload.Empty, err error) {
-	ctx, span := trace.StartSpan(ctx, "vald/manager-replication-agent.Recover")
+	_, span := trace.StartSpan(ctx, "vald/manager-replication-agent.Recover")
 	defer func() {
 		if span != nil {
 			span.End()
@@ -62,7 +62,7 @@ func (s *server) Recover(ctx context.Context, req *payload.Replication_Recovery)
 }
 
 func (s *server) Rebalance(ctx context.Context, req *payload.Replication_Rebalance) (*payload.Empty, error) {
-	ctx, span := trace.StartSpan(ctx, "vald/manager-replication-agent.Rebalance")
+	_, span := trace.StartSpan(ctx, "vald/manager-replication-agent.Rebalance")
 	defer func() {
 		if span != nil {
 			span.End()
@@ -73,7 +73,7 @@ func (s *server) Rebalance(ctx context.Context, req *payload.Replication_Rebalan
 
 func (s *server) AgentInfo(ctx context.Context, req *payload.Empty) (*payload.Replication_Agents, error) {
 	// TODO implement this later
-	ctx, span := trace.StartSpan(ctx, "vald/manager-replication-agent.AgentInfo")
+	_, span := trace.StartSpan(ctx, "vald/manager-replication-agent.AgentInfo")
 	defer func() {
 		if span != nil {
 			span.End()

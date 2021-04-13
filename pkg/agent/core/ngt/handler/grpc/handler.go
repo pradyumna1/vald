@@ -1047,7 +1047,7 @@ func (s *server) MultiUpsert(ctx context.Context, reqs *payload.Upsert_MultiRequ
 }
 
 func (s *server) Remove(ctx context.Context, req *payload.Remove_Request) (res *payload.Object_Location, err error) {
-	ctx, span := trace.StartSpan(ctx, apiName+".Remove")
+	_, span := trace.StartSpan(ctx, apiName+".Remove")
 	defer func() {
 		if span != nil {
 			span.End()
@@ -1165,7 +1165,7 @@ func (s *server) StreamRemove(stream vald.Remove_StreamRemoveServer) (err error)
 }
 
 func (s *server) MultiRemove(ctx context.Context, reqs *payload.Remove_MultiRequest) (res *payload.Object_Locations, err error) {
-	ctx, span := trace.StartSpan(ctx, apiName+".MultiRemove")
+	_, span := trace.StartSpan(ctx, apiName+".MultiRemove")
 	defer func() {
 		if span != nil {
 			span.End()
@@ -1460,7 +1460,7 @@ func (s *server) CreateAndSaveIndex(ctx context.Context, c *payload.Control_Crea
 }
 
 func (s *server) IndexInfo(ctx context.Context, _ *payload.Empty) (res *payload.Info_Index_Count, err error) {
-	ctx, span := trace.StartSpan(ctx, apiName+".IndexInfo")
+	_, span := trace.StartSpan(ctx, apiName+".IndexInfo")
 	defer func() {
 		if span != nil {
 			span.End()
