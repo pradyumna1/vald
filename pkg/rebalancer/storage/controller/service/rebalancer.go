@@ -400,12 +400,12 @@ func (r *rebalancer) createJob(ctx context.Context, jobTpl job.Job, reason confi
 func (r *rebalancer) genPodModels() (podModels map[string][]*model.Pod, err error) {
 	mpods, ok := r.podMetrics.Load().(map[string]mpod.Pod)
 	if !ok {
-		return nil, errors.ErrEmptyReconileResult("pod metrics")
+		return nil, errors.ErrEmptyReconcileResult("pod metrics")
 	}
 
 	pods, ok := r.pods.Load().([]pod.Pod)
 	if !ok {
-		return nil, errors.ErrEmptyReconileResult("pod")
+		return nil, errors.ErrEmptyReconcileResult("pod")
 	}
 
 	podModels = make(map[string][]*model.Pod)
@@ -429,7 +429,7 @@ func (r *rebalancer) genPodModels() (podModels map[string][]*model.Pod, err erro
 func (r *rebalancer) namespaceByJobs() (jobmap map[string][]job.Job, err error) {
 	jobs, ok := r.jobs.Load().([]job.Job)
 	if !ok {
-		return nil, errors.ErrEmptyReconileResult("job")
+		return nil, errors.ErrEmptyReconcileResult("job")
 	}
 
 	jobmap = make(map[string][]job.Job)
